@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Đăng nhập hoặc tạo tài khoản Mộc Studio."><title>Tài khoản — Mộc Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css"><script src="https://unpkg.com/lucide@latest" defer></script>
+  <script src="js/data.js" defer></script><script src="js/auth.js" defer></script><script src="js/ui.js" defer></script><script src="js/account.js" defer></script>
+</head>
+<body><div id="site-header"></div>
+  <main class="account-page page-wrap">
+    <section class="account-card" id="auth-panel">
+      <p class="eyebrow">CHÀO MỪNG BẠN ĐẾN VỚI MỘC</p><h1 id="account-title">Đăng nhập <em>tài khoản</em></h1><p class="account-intro" id="account-intro">Đăng nhập để lưu món đồ yêu thích và theo dõi đơn hàng của bạn.</p>
+      <div class="auth-tabs" role="tablist"><button class="auth-tab active" id="login-tab" type="button" role="tab">Đăng nhập</button><button class="auth-tab" id="register-tab" type="button" role="tab">Tạo tài khoản</button></div>
+      <form id="login-form" class="account-form">
+        <label>Email<input type="email" name="email" autocomplete="email" placeholder="ban@email.com" required></label>
+        <label>Mật khẩu<input type="password" name="password" autocomplete="current-password" placeholder="Nhập mật khẩu" required></label>
+        <button class="button button-dark" type="submit">Đăng nhập <i data-lucide="arrow-right"></i></button><p class="form-message" id="login-message" aria-live="polite"></p>
+      </form>
+      <form id="register-form" class="account-form" hidden>
+        <label>Họ và tên<input type="text" name="name" autocomplete="name" placeholder="Tên của bạn" required minlength="2"></label>
+        <label>Email<input type="email" name="email" autocomplete="email" placeholder="ban@email.com" required></label>
+        <label>Mật khẩu <span class="field-hint">Ít nhất 8 ký tự</span><input type="password" name="password" autocomplete="new-password" placeholder="Tạo mật khẩu" required minlength="8"></label>
+        <label>Nhập lại mật khẩu<input type="password" name="confirmPassword" autocomplete="new-password" placeholder="Nhập lại mật khẩu" required minlength="8"></label>
+        <button class="button button-dark" type="submit">Tạo tài khoản <i data-lucide="arrow-right"></i></button><p class="form-message" id="register-message" aria-live="polite"></p>
+      </form>
+      <p class="demo-notice"><i data-lucide="info"></i> Bản demo chỉ lưu tài khoản trên trình duyệt. Email quản trị mẫu được cấu hình trong <code>js/data.js</code>; không dùng quyền này cho website thật khi chưa có máy chủ bảo mật.</p>
+    </section>
+    <section class="account-card account-profile" id="profile-panel" hidden>
+      <p class="eyebrow">TÀI KHOẢN MỘC STUDIO</p><h1>Xin chào, <em id="profile-name"></em></h1><p class="account-intro" id="profile-email"></p>
+      <div class="profile-links"><a class="button button-outline" href="orders.html">Xem đơn hàng <i data-lucide="arrow-right"></i></a><a class="button button-outline" id="admin-profile-link" href="admin.html" hidden>Trang quản trị <i data-lucide="arrow-right"></i></a><a class="button button-outline" href="products.html">Tiếp tục mua sắm <i data-lucide="arrow-right"></i></a><button class="button button-dark" id="logout-button" type="button">Đăng xuất</button></div>
+    </section>
+  </main>
+  <div id="site-footer"></div><div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body></html>

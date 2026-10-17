@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="vi">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Thanh toán — Mộc Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="styles.css"><script src="https://unpkg.com/lucide@latest" defer></script>
+  <script src="js/data.js" defer></script><script src="js/auth.js" defer></script><script src="js/ui.js" defer></script><script src="js/checkout.js" defer></script>
+</head>
+<body><div id="site-header"></div><main class="page-wrap page-main">
+  <nav class="breadcrumbs"><a href="index.html">Trang chủ</a><span>/</span><a href="cart.html">Giỏ hàng</a><span>/</span><span>Thanh toán</span></nav>
+  <p class="eyebrow">HOÀN TẤT ĐƠN HÀNG</p><h1>Thông tin <em>giao hàng</em></h1>
+  <form id="checkout-form" class="checkout-layout">
+    <section class="checkout-fields"><h2>Thông tin người nhận</h2><div class="form-grid">
+      <label class="wide-field">Họ và tên<input name="name" autocomplete="name" required minlength="2" placeholder="Tên người nhận"></label>
+      <label>Số điện thoại<input name="phone" type="tel" autocomplete="tel" required pattern="[0-9+().\s-]{9,15}" placeholder="09xx xxx xxx"></label>
+      <label>Email<input name="email" type="email" autocomplete="email" required placeholder="ban@email.com"></label>
+      <label class="wide-field">Địa chỉ giao hàng<input name="address" autocomplete="street-address" required minlength="8" placeholder="Số nhà, tên đường, phường/xã, quận/huyện"></label>
+      <label class="wide-field">Ghi chú cho cửa hàng <span class="field-hint">Không bắt buộc</span><textarea name="note" rows="3" placeholder="Ví dụ: giao giờ hành chính..."></textarea></label>
+    </div>
+    <h2 class="payment-heading">Phương thức thanh toán</h2>
+    <label class="payment-option"><input type="radio" name="payment" value="cod" checked><span><strong>Thanh toán khi nhận hàng (COD)</strong><small>Trả tiền trực tiếp khi nhận được đơn.</small></span><i data-lucide="banknote"></i></label>
+    <label class="payment-option"><input type="radio" name="payment" value="bank"><span><strong>Chuyển khoản / QR (mô phỏng)</strong><small>Mã QR minh họa sẽ hiện trong chi tiết đơn hàng.</small></span><i data-lucide="landmark"></i></label>
+    <div id="payment-demo-note" class="payment-demo-note" hidden>Đây là lựa chọn minh họa. QR không chứa thông tin tài khoản, trang web chưa kết nối ngân hàng và không nhận tiền thật.</div>
+    <p class="demo-notice"><i data-lucide="info"></i> Phiên bản demo lưu đơn trên thiết bị của bạn, chưa gửi dữ liệu đến cửa hàng.</p>
+    </section>
+    <aside class="order-summary"><h2>Đơn hàng của bạn</h2><div id="checkout-items" class="checkout-items"></div><div class="summary-row"><span>Tạm tính</span><strong id="checkout-subtotal"></strong></div><div class="summary-row"><span>Vận chuyển</span><strong id="checkout-shipping"></strong></div><div class="summary-row summary-total"><span>Tổng thanh toán</span><strong id="checkout-total"></strong></div><button class="button button-dark full-width" type="submit">Đặt hàng <i data-lucide="arrow-right"></i></button><a class="continue-link" href="cart.html">← Quay lại giỏ hàng</a></aside>
+  </form>
+</main><div id="site-footer"></div><div id="toast" class="toast" role="status" aria-live="polite"></div></body></html>

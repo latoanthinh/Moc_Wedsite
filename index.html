@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description"
+    content="Mộc Studio — thời trang nữ tối giản, chất liệu tự nhiên, dành cho nhịp sống hiện đại.">
+  <meta name="theme-color" content="#f7f6f2">
+  <title>Mộc Studio — Mặc điều bạn yêu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/lucide@latest" defer></script>
+  <script src="js/data.js" defer></script>
+  <script src="js/auth.js" defer></script>
+  <script src="js/ui.js" defer></script>
+  <script src="js/home.js" defer></script>
+</head>
+
+<body>
+  <div class="announcement">Mùa mới đã về — khám phá những món đồ bạn sẽ yêu thích</div>
+  <div id="site-header"></div>
+  <main>
+    <section class="hero page-wrap">
+      <div class="hero-copy">
+        <p class="eyebrow">THỜI TRANG BỀN VỮNG · MADE WITH CARE</p>
+        <h1>Mặc điều<br>bạn <em>yêu.</em></h1>
+        <p class="lead">Thiết kế tinh giản, chất liệu dễ chịu. Những món đồ đồng hành cùng bạn qua mọi ngày thường.</p>
+        <a class="button button-dark" href="products.html">Khám phá bộ sưu tập <i data-lucide="arrow-right"></i></a>
+        <div class="hero-proof"><span>★★★★★</span><strong>4,9/5</strong><span>từ khách hàng của Mộc</span></div>
+      </div>
+      <div class="hero-photo">
+        <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1200&q=85"
+          alt="Bộ sưu tập thời trang nữ mùa mới">
+        <span class="photo-note">CHẤT LIỆU<br><strong>TỰ NHIÊN</strong></span>
+      </div>
+    </section>
+    <section class="benefits page-wrap" aria-label="Lợi ích mua sắm">
+      <div><i data-lucide="truck"></i><span><strong>Giao hàng toàn quốc</strong><small>Miễn phí từ
+            500.000₫</small></span></div>
+      <div><i data-lucide="refresh-cw"></i><span><strong>Đổi trả dễ dàng</strong><small>Trong vòng 7 ngày</small></span>
+      </div>
+      <div><i data-lucide="leaf"></i><span><strong>Chất liệu có trách nhiệm</strong><small>Thoải mái, bền
+            đẹp</small></span></div>
+    </section>
+    <section class="page-wrap section-space">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">TÌM PHONG CÁCH CỦA BẠN</p>
+          <h2>Mua sắm theo <em>danh mục</em></h2>
+        </div><a class="text-link" href="products.html">Tất cả sản phẩm <i data-lucide="arrow-up-right"></i></a>
+      </div>
+      <div class="category-grid">
+        <a class="category-card" href="products.html?category=Áo"><img
+            src="https://images.unsplash.com/photo-1564257577-6a1a4a4d10a1?auto=format&fit=crop&w=700&q=80" alt="Áo nữ"
+            loading="lazy"><span>Áo <i data-lucide="arrow-up-right"></i></span></a>
+        <a class="category-card" href="products.html?category=Quần"><img
+            src="https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=700&q=80"
+            alt="Quần nữ" loading="lazy"><span>Quần <i data-lucide="arrow-up-right"></i></span></a>
+        <a class="category-card" href="products.html?category=Váy"><img
+            src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=700&q=80"
+            alt="Váy nữ" loading="lazy"><span>Váy <i data-lucide="arrow-up-right"></i></span></a>
+        <a class="category-card" href="products.html?category=Phụ%20kiện"><img
+            src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=700&q=80"
+            alt="Phụ kiện" loading="lazy"><span>Phụ kiện <i data-lucide="arrow-up-right"></i></span></a>
+      </div>
+    </section>
+    <section class="muted-section section-space">
+      <div class="page-wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">ĐƯỢC YÊU THÍCH NHẤT</p>
+            <h2>Món đồ <em>đặc biệt</em></h2>
+          </div><a class="text-link" href="products.html">Xem tất cả <i data-lucide="arrow-up-right"></i></a>
+        </div>
+        <div class="product-grid" id="featured-products" aria-live="polite"></div>
+      </div>
+    </section>
+    <section class="story-strip page-wrap">
+      <img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=900&q=85"
+        alt="Thời trang tinh giản từ Mộc Studio" loading="lazy">
+      <div>
+        <p class="eyebrow">ÍT HƠN, NHƯNG TỐT HƠN</p>
+        <h2>Một lựa chọn nhỏ.<br><em>Một khác biệt lớn.</em></h2>
+        <p>Mộc tin vẻ đẹp không cần phải đánh đổi. Mỗi thiết kế được tạo nên từ chất liệu có trách nhiệm và sự trân
+          trọng dành cho những điều giản dị.</p><a class="button button-outline" href="about.html">Tìm hiểu về Mộc <i
+            data-lucide="arrow-right"></i></a>
+      </div>
+    </section>
+  </main>
+  <div id="site-footer"></div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+
+</html>

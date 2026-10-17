@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Khám phá các thiết kế tinh giản, dễ mặc của Mộc Studio.">
+  <title>Sản phẩm — Mộc Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/lucide@latest" defer></script>
+  <script src="js/data.js" defer></script><script src="js/auth.js" defer></script><script src="js/ui.js" defer></script><script src="js/products.js" defer></script>
+</head>
+<body><div id="site-header"></div>
+  <main class="page-wrap page-main">
+    <nav class="breadcrumbs" aria-label="Đường dẫn"><a href="index.html">Trang chủ</a><span>/</span><span>Sản phẩm</span></nav>
+    <div class="page-title-row"><div><p class="eyebrow">BỘ SƯU TẬP MỘC STUDIO</p><h1>Sản phẩm <em>của Mộc</em></h1><p class="lead">Những món đồ đẹp, thoải mái và dễ đồng hành mỗi ngày.</p></div></div>
+    <div class="catalog-tools">
+      <label class="search-field"><i data-lucide="search"></i><input id="product-search" type="search" placeholder="Thử “áo linen”, “váy hoa”..." autocomplete="off"><button id="clear-search" type="button" aria-label="Xóa nội dung tìm kiếm" hidden><i data-lucide="x"></i></button></label>
+      <label class="sort-control">Sắp xếp
+        <select id="product-sort"><option value="featured">Nổi bật</option><option value="price-asc">Giá thấp đến cao</option><option value="price-desc">Giá cao đến thấp</option><option value="name">Tên sản phẩm</option></select>
+      </label>
+    </div>
+    <div class="catalog-layout">
+      <aside class="filters" aria-label="Bộ lọc sản phẩm"><h2>Lọc sản phẩm</h2><p class="filter-title">Danh mục</p><div id="category-filters" class="category-filters"></div>
+        <p class="filter-title">Khoảng giá</p><label class="price-filter">Từ <input type="number" id="min-price" min="0" step="50000" placeholder="0"></label><label class="price-filter">Đến <input type="number" id="max-price" min="0" step="50000" placeholder="1.000.000"></label><button class="button button-outline filter-reset" id="reset-filters">Xóa bộ lọc</button>
+      </aside>
+      <section class="catalog-results" aria-label="Danh sách sản phẩm"><div class="results-summary"><span id="results-count"></span><span id="search-hint" aria-live="polite"></span></div><div class="product-grid" id="product-list" aria-live="polite"></div><div class="empty-state" id="no-results" hidden><i data-lucide="search-x"></i><h2>Chưa tìm thấy món đồ phù hợp</h2><p>Thử từ khóa ngắn hơn, bỏ dấu hoặc kiểm tra chính tả nhé.</p><button class="button button-outline" id="empty-reset">Xem tất cả sản phẩm</button></div></section>
+    </div>
+  </main>
+  <div id="site-footer"></div><div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body></html>

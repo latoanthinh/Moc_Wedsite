@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Trang quản trị cửa hàng Mộc Studio.">
+  <meta name="theme-color" content="#f7f6f2">
+  <title>Quản trị cửa hàng — Mộc Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/lucide@latest" defer></script>
+  <script src="js/data.js" defer></script>
+  <script src="js/auth.js" defer></script>
+  <script src="js/ui.js" defer></script>
+  <script src="js/admin.js" defer></script>
+</head>
+<body>
+  <div id="site-header"></div>
+  <main class="page-wrap page-main admin-main" id="admin-main" hidden>
+    <nav class="breadcrumbs" aria-label="Đường dẫn"><a href="index.html">Trang chủ</a><span>/</span><span>Quản trị</span></nav>
+    <section class="admin-heading">
+      <div><p class="eyebrow">MỘC STUDIO · BẢNG ĐIỀU KHIỂN</p><h1>Quản lý <em>cửa hàng</em></h1><p class="lead">Xin chào, <strong id="admin-name"></strong>. Dữ liệu demo chỉ tồn tại trên trình duyệt này.</p></div>
+      <a class="button button-outline" href="products.html">Xem cửa hàng <i data-lucide="external-link"></i></a>
+    </section>
+    <div class="admin-warning"><i data-lucide="shield-alert"></i><span><strong>Chế độ quản trị demo:</strong> quyền admin được xác định bằng email trong mã nguồn phía trình duyệt. Không dùng để quản lý dữ liệu hoặc thanh toán thật.</span></div>
+    <section class="admin-stats" aria-label="Tổng quan cửa hàng">
+      <article><span>Tổng sản phẩm</span><strong id="stat-products">0</strong><i data-lucide="package"></i></article>
+      <article><span>Đơn chưa hoàn tất</span><strong id="stat-open-orders">0</strong><i data-lucide="clipboard-list"></i></article>
+      <article><span>Chờ xác nhận</span><strong id="stat-pending-orders">0</strong><i data-lucide="clock-3"></i></article>
+      <article><span>Doanh thu đã giao</span><strong id="stat-revenue">0₫</strong><i data-lucide="chart-no-axes-column-increasing"></i></article>
+    </section>
+    <div class="admin-tabs" role="tablist" aria-label="Khu vực quản trị">
+      <button class="admin-tab active" id="products-tab" type="button" role="tab" aria-selected="true"><i data-lucide="package"></i> Sản phẩm</button>
+      <button class="admin-tab" id="orders-tab" type="button" role="tab" aria-selected="false"><i data-lucide="clipboard-list"></i> Đơn hàng</button>
+    </div>
+    <section class="admin-panel" id="products-panel" role="tabpanel" aria-labelledby="products-tab">
+      <div class="admin-section-head"><div><h2>Danh sách sản phẩm</h2><p>Thêm, cập nhật giá, hình ảnh và số lượng tồn kho.</p></div><button class="button button-dark" id="add-product" type="button"><i data-lucide="plus"></i> Thêm sản phẩm</button></div>
+      <label class="admin-search"><i data-lucide="search"></i><input id="admin-product-search" type="search" placeholder="Tìm sản phẩm theo tên hoặc danh mục..."></label>
+      <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Sản phẩm</th><th>Danh mục</th><th>Giá bán</th><th>Tồn kho</th><th>Hiển thị</th><th>Thao tác</th></tr></thead><tbody id="admin-products"></tbody></table></div>
+      <p class="admin-empty" id="products-empty" hidden>Chưa có sản phẩm phù hợp.</p>
+    </section>
+    <section class="admin-panel" id="orders-panel" role="tabpanel" aria-labelledby="orders-tab" hidden>
+      <div class="admin-section-head"><div><h2>Xử lý đơn hàng</h2><p>Cập nhật trạng thái giao hàng và thanh toán cho đơn của khách.</p></div><label class="admin-order-filter">Lọc đơn<select id="order-status-filter"><option value="Tất cả">Tất cả trạng thái</option><option>Chờ xác nhận</option><option>Đã xác nhận</option><option>Đang giao</option><option>Đã giao</option><option>Đã hủy</option></select></label></div>
+      <div id="admin-orders" class="admin-orders"></div>
+      <p class="admin-empty" id="orders-empty" hidden>Chưa có đơn hàng nào trên trình duyệt này.</p>
+    </section>
+    <p class="admin-storage-note"><i data-lucide="hard-drive"></i> Thay đổi được lưu trong localStorage của trình duyệt này; không tự đồng bộ giữa máy tính hoặc tài khoản.</p>
+  </main>
+  <dialog class="admin-dialog" id="product-dialog" aria-labelledby="product-dialog-title">
+    <form id="product-form" class="admin-product-form">
+      <div class="dialog-heading"><div><p class="eyebrow">DANH MỤC SẢN PHẨM</p><h2 id="product-dialog-title">Thêm sản phẩm</h2></div><button class="icon-button" type="button" id="close-product-dialog" aria-label="Đóng"><i data-lucide="x"></i></button></div>
+      <input type="hidden" name="id">
+      <label>Tên sản phẩm<input name="name" required minlength="2" maxlength="90" placeholder="Áo sơ mi linen"></label>
+      <div class="admin-form-grid">
+        <label>Danh mục<select name="category" required></select></label>
+        <label>Giá bán (₫)<input name="price" type="number" min="1" step="1000" required></label>
+        <label>Giá gốc (₫) <span class="field-hint">Không bắt buộc</span><input name="oldPrice" type="number" min="0" step="1000"></label>
+        <label>Tồn kho<input name="stock" type="number" min="0" step="1" required></label>
+        <label>Nhãn hiển thị <span class="field-hint">Không bắt buộc</span><input name="badge" maxlength="24" placeholder="MỚI"></label>
+        <label>Đánh giá<input name="rating" type="number" min="0" max="5" step="0.1" value="5"></label>
+      </div>
+      <label>Đường dẫn ảnh<input name="image" type="url" required placeholder="https://..."></label>
+      <label>Từ khóa tìm kiếm<input name="keywords" maxlength="180" placeholder="linen, áo sơ mi, nữ..."></label>
+      <label class="admin-checkbox"><input name="active" type="checkbox" checked> Hiển thị sản phẩm trên cửa hàng</label>
+      <div class="dialog-actions"><button class="button button-outline" type="button" id="cancel-product-edit">Hủy</button><button class="button button-dark" type="submit">Lưu sản phẩm</button></div>
+    </form>
+  </dialog>
+  <div id="site-footer"></div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

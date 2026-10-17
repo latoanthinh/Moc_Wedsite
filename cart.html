@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="vi">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Giỏ hàng — Mộc Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="styles.css"><script src="https://unpkg.com/lucide@latest" defer></script>
+  <script src="js/data.js" defer></script><script src="js/auth.js" defer></script><script src="js/ui.js" defer></script><script src="js/cart.js" defer></script>
+</head>
+<body><div id="site-header"></div><main class="page-wrap page-main">
+  <nav class="breadcrumbs"><a href="index.html">Trang chủ</a><span>/</span><span>Giỏ hàng</span></nav>
+  <p class="eyebrow">SẮP THÀNH MÓN ĐỒ CỦA BẠN</p><h1>Giỏ hàng <em>của bạn</em></h1>
+  <div class="cart-layout"><section id="cart-lines" class="cart-lines" aria-live="polite"></section>
+    <aside class="order-summary"><h2>Tóm tắt đơn hàng</h2><div class="summary-row"><span>Tạm tính</span><strong id="cart-subtotal">0₫</strong></div><div class="summary-row"><span>Vận chuyển</span><strong id="cart-shipping">—</strong></div><div class="summary-row summary-total"><span>Tổng cộng</span><strong id="cart-total">0₫</strong></div><p id="shipping-progress" class="shipping-progress"></p><a class="button button-dark full-width" id="checkout-link" href="checkout.html">Tiến hành thanh toán <i data-lucide="arrow-right"></i></a><a class="continue-link" href="products.html">← Tiếp tục mua sắm</a><p class="secure-note"><i data-lucide="shield-check"></i> Thanh toán mô phỏng an toàn trong bản demo.</p></aside>
+  </div>
+</main><div id="site-footer"></div><div id="toast" class="toast" role="status" aria-live="polite"></div></body></html>
