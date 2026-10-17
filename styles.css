@@ -2987,6 +2987,27 @@ body.no-scroll {
   font-size: 11px;
 }
 
+.gallery-admin-item-actions {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.gallery-admin-thumbnail {
+  min-height: 36px;
+  padding: 0 10px;
+  border: 1px solid var(--gallery-line);
+  background: transparent;
+  color: var(--gallery-ink);
+  cursor: pointer;
+  font: 500 12px var(--sans);
+}
+
+.gallery-admin-thumbnail:hover {
+  border-color: var(--gallery-accent);
+  background: #fbf3f1;
+}
+
 .gallery-admin-delete {
   min-height: 36px;
   padding: 0 12px;

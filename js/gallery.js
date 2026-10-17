@@ -115,10 +115,14 @@
   const viewerVideo = document.getElementById("viewer-video");
   const viewerCaption = document.getElementById("viewer-caption");
   const customMediaKey = "nang-gallery-custom-media";
+  const mediaDatabaseName = "nang-gallery-media";
+  const mediaObjectStore = "uploads";
   const fallbackCover = "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=760&q=85";
+  const uploadedMediaUrls = new Map();
   let selectedFilter = "all";
   let visiblePhotos = [];
   let activeIndex = 0;
+  let renderGeneration = 0;
 
   function getCustomMedia() {
     try {
@@ -135,19 +139,75 @@
     }
   }
 
-  function getPhotos() {
+  function openMediaDatabase() {
+    return new Promise((resolve, reject) => {
+      const request = indexedDB.open(mediaDatabaseName, 1);
+      request.onupgradeneeded = () => {
+        if (!request.result.objectStoreNames.contains(mediaObjectStore)) {
+          request.result.createObjectStore(mediaObjectStore, { keyPath: "id" });
+        }
+      };
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error || new Error("Không thể mở thư viện video trên thiết bị."));
+      request.onblocked = () => reject(new Error("Đang chờ đóng một tab khác để mở thư viện media."));
+    });
+  }
+
+  async function getUploadedMedia() {
+    const database = await openMediaDatabase();
+    return new Promise((resolve, reject) => {
+      const transaction = database.transaction(mediaObjectStore, "readonly");
+      const request = transaction.objectStore(mediaObjectStore).getAll();
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error || new Error("Không thể đọc media từ thiết bị."));
+      transaction.oncomplete = () => database.close();
+      transaction.onerror = () => {
+        database.close();
+        reject(transaction.error || new Error("Không thể đọc media từ thiết bị."));
+      };
+    });
+  }
+
+  function getMediaObjectUrl(id, file) {
+    let url = uploadedMediaUrls.get(id);
+    if (!url) {
+      url = URL.createObjectURL(file);
+      uploadedMediaUrls.set(id, url);
+    }
+    return url;
+  }
+
+  function getPhotos(uploadedMedia) {
+    const thumbnailUrls = new Map();
+    uploadedMedia.forEach((item) => {
+      if (!(item.thumbnailFile instanceof Blob)) return;
+      const id = item.id.startsWith("thumbnail:")
+        ? item.id.slice("thumbnail:".length)
+        : item.id;
+      thumbnailUrls.set(id, getMediaObjectUrl(`thumbnail:${id}`, item.thumbnailFile));
+    });
+    const uploaded = uploadedMedia.filter((item) => item && item.file instanceof Blob).map((item) => {
+      const mediaObjectUrl = getMediaObjectUrl(item.id, item.file);
+      return {
+        ...item,
+        label: item.kind === "video" ? "Video" : "Ảnh",
+        image: item.kind === "photo" ? mediaObjectUrl : "",
+        video: item.kind === "video" ? mediaObjectUrl : "",
+        cover: thumbnailUrls.get(item.id) || item.coverUrl || (item.kind === "video" ? fallbackCover : "")
+      };
+    });
     return [...defaultPhotos, ...getCustomMedia().map((item) => ({
       ...item,
       label: item.kind === "video" ? "Video" : "Ảnh",
       image: item.kind === "photo" ? item.mediaUrl : "",
       video: item.kind === "video" ? item.mediaUrl : "",
-      cover: item.coverUrl
-    }))];
+      cover: thumbnailUrls.get(item.id) || item.coverUrl
+    })), ...uploaded];
   }
 
-  function imageUrl(photo, width) {
-    if (photo.cover) return photo.cover;
-    if (/^https?:\/\//i.test(photo.image)) return photo.image;
+  function imageUrl(photo, width, useThumbnail = true) {
+    if (useThumbnail && photo.cover) return photo.cover;
+    if (/^https?:\/\//i.test(photo.image) || photo.image.startsWith("blob:")) return photo.image;
     if (!photo.image) return fallbackCover;
     return `https://images.unsplash.com/${photo.image}?auto=format&fit=crop&w=${width}&q=85`;
   }
@@ -163,9 +223,41 @@
     }[character]));
   }
 
-  function render() {
+  async function render() {
+    const generation = ++renderGeneration;
     const query = normalize(search.value.trim());
-    visiblePhotos = getPhotos().filter((photo) => {
+    let photos;
+    let uploadedMedia;
+    try {
+      uploadedMedia = await getUploadedMedia();
+      photos = getPhotos(uploadedMedia);
+    } catch (error) {
+      console.error("Không thể tải media trong gallery.", error);
+      if (generation === renderGeneration) {
+        grid.hidden = true;
+        empty.hidden = false;
+        empty.textContent = "Không thể đọc thư viện tệp trên thiết bị. Thử tải lại trang gallery.";
+      }
+      return;
+    }
+    if (generation !== renderGeneration) return;
+    const activeIds = new Set();
+    uploadedMedia.forEach((item) => {
+      if (item.file instanceof Blob) activeIds.add(item.id);
+      if (item.thumbnailFile instanceof Blob) {
+        const id = item.id.startsWith("thumbnail:")
+          ? item.id.slice("thumbnail:".length)
+          : item.id;
+        activeIds.add(`thumbnail:${id}`);
+      }
+    });
+    uploadedMediaUrls.forEach((url, id) => {
+      if (!activeIds.has(id)) {
+        URL.revokeObjectURL(url);
+        uploadedMediaUrls.delete(id);
+      }
+    });
+    visiblePhotos = photos.filter((photo) => {
       const matchesFilter = selectedFilter === "all"
         || (selectedFilter === "photo" && photo.kind !== "video")
         || (selectedFilter === "video" && photo.kind === "video")
@@ -204,7 +296,7 @@
       viewerVideo.load();
       viewerVideo.hidden = true;
       viewerImage.hidden = false;
-      viewerImage.src = imageUrl(photo, 1600);
+      viewerImage.src = imageUrl(photo, 1600, false);
       viewerImage.alt = photo.title;
       viewerImage.style.objectPosition = photo.position;
     }
@@ -254,9 +346,24 @@
     if (event.key === "ArrowRight") showPhoto(activeIndex + 1);
   });
 
+  function refreshGallery() {
+    uploadedMediaUrls.forEach((url, id) => {
+      if (id.startsWith("thumbnail:")) {
+        URL.revokeObjectURL(url);
+        uploadedMediaUrls.delete(id);
+      }
+    });
+    render();
+  }
+
   window.addEventListener("storage", (event) => {
-    if (event.key === customMediaKey) render();
+    if (event.key === customMediaKey || event.key === `${customMediaKey}-updated`) refreshGallery();
   });
+
+  if ("BroadcastChannel" in window) {
+    const mediaChannel = new BroadcastChannel("nang-gallery-media-updates");
+    mediaChannel.addEventListener("message", refreshGallery);
+  }
 
   render();
 })();

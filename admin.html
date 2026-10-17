@@ -38,7 +38,7 @@
     </section>
 
     <div class="gallery-admin-notice">
-      Website tĩnh: dán URL công khai của ảnh hoặc video. Nội dung được lưu trên trình duyệt hiện tại, không tự đồng bộ sang thiết bị khác.
+      Nội dung và thumbnail tải lên được lưu trong cơ sở dữ liệu IndexedDB của trình duyệt này, không tải lên máy chủ hay đồng bộ sang thiết bị khác.
     </div>
 
     <section class="gallery-admin-panel" id="media-form">
@@ -65,9 +65,23 @@
             <option value="everyday">Đời thường</option>
           </select>
         </label>
+        <label>Nguồn nội dung
+          <select name="source" id="media-source">
+            <option value="url">URL công khai</option>
+            <option value="device">Từ thiết bị này</option>
+          </select>
+        </label>
         <label class="gallery-admin-wide" id="media-url-label">URL ảnh
           <input name="mediaUrl" id="media-url" type="url" required placeholder="https://...">
           <small id="media-url-help">Dán URL trực tiếp tới tệp ảnh công khai.</small>
+        </label>
+        <label class="gallery-admin-wide" id="media-file-label" hidden>Tệp ảnh
+          <input name="mediaFile" id="media-file" type="file" accept="image/*" disabled>
+          <small id="media-file-help">Chọn tệp ảnh trên thiết bị, tối đa 150 MB.</small>
+        </label>
+        <label class="gallery-admin-wide">Thumbnail <span>(không bắt buộc)</span>
+          <input name="thumbnailFile" id="thumbnail-file" type="file" accept="image/*">
+          <small>Chọn ảnh đại diện hiển thị trong gallery, tối đa 20 MB.</small>
         </label>
         <label class="gallery-admin-wide" id="cover-url-label" hidden>URL ảnh bìa video <span>(không bắt buộc)</span>
           <input name="coverUrl" id="cover-url" type="url" placeholder="https://...">
