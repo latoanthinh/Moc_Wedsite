@@ -4,131 +4,99 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Trang quản trị cửa hàng Mộc Studio.">
-  <meta name="theme-color" content="#f7f6f2">
-  <title>Quản trị cửa hàng — Mộc Studio</title>
+  <meta name="description" content="Quản lý ảnh và video trong gallery Nàng.">
+  <meta name="theme-color" content="#f8f5f2">
+  <title>Quản trị gallery — Nàng</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
     href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-  <script src="https://unpkg.com/lucide@latest" defer></script>
-  <script src="js/data.js" defer></script>
-  <script src="js/auth.js" defer></script>
-  <script src="js/ui.js" defer></script>
-  <script src="js/admin.js" defer></script>
+  <script src="js/gallery-admin.js" defer></script>
 </head>
 
-<body>
-  <div id="site-header"></div>
-  <main class="page-wrap page-main admin-main" id="admin-main" hidden>
-    <nav class="breadcrumbs" aria-label="Đường dẫn"><a href="index.html">Trang chủ</a><span>/</span><span>Quản
-        trị</span></nav>
-    <section class="admin-heading">
+<body class="gallery-page">
+  <header class="gallery-header">
+    <a class="gallery-brand" href="index.html" aria-label="Nàng — về gallery">nàng<span>.</span></a>
+    <nav class="gallery-nav" aria-label="Điều hướng chính">
+      <a href="index.html">Xem gallery</a>
+      <a href="#media-form">Thêm nội dung</a>
+      <a href="#media-list">Nội dung đã thêm</a>
+    </nav>
+    <a class="gallery-header-link" href="index.html">Về gallery <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main class="gallery-admin-main">
+    <section class="gallery-admin-heading">
       <div>
-        <p class="eyebrow">MỘC STUDIO · BẢNG ĐIỀU KHIỂN</p>
-        <h1>Quản lý <em>cửa hàng</em></h1>
-        <p class="lead">Xin chào, <strong id="admin-name"></strong>. Dữ liệu demo chỉ tồn tại trên trình duyệt này.</p>
+        <p class="gallery-eyebrow"><span></span> NÀNG · QUẢN TRỊ</p>
+        <h1>Thêm điều <em>đẹp.</em></h1>
+        <p>Thêm ảnh hoặc video vào bộ sưu tập, chọn chủ đề và quản lý nội dung đã thêm.</p>
       </div>
-      <a class="button button-outline" href="products.html">Xem cửa hàng <i data-lucide="external-link"></i></a>
+      <div class="gallery-admin-count"><strong id="admin-media-count">0</strong><span>nội dung của bạn</span></div>
     </section>
-    <div class="admin-warning"><i data-lucide="shield-alert"></i><span><strong>Chế độ quản trị demo:</strong> quyền
-        admin được xác định bằng email trong mã nguồn phía trình duyệt. Không dùng để quản lý dữ liệu hoặc thanh toán
-        thật.</span></div>
-    <section class="admin-stats" aria-label="Tổng quan cửa hàng">
-      <article><span>Tổng sản phẩm</span><strong id="stat-products">0</strong><i data-lucide="package"></i></article>
-      <article><span>Đơn chưa hoàn tất</span><strong id="stat-open-orders">0</strong><i
-          data-lucide="clipboard-list"></i></article>
-      <article><span>Chờ xác nhận</span><strong id="stat-pending-orders">0</strong><i data-lucide="clock-3"></i>
-      </article>
-      <article><span>Doanh thu đã giao</span><strong id="stat-revenue">0₫</strong><i
-          data-lucide="chart-no-axes-column-increasing"></i></article>
-    </section>
-    <div class="admin-tabs" role="tablist" aria-label="Khu vực quản trị">
-      <button class="admin-tab active" id="products-tab" type="button" role="tab" aria-selected="true"><i
-          data-lucide="package"></i> Sản phẩm</button>
-      <button class="admin-tab" id="orders-tab" type="button" role="tab" aria-selected="false"><i
-          data-lucide="clipboard-list"></i> Đơn hàng</button>
+
+    <div class="gallery-admin-notice">
+      Website tĩnh: dán URL công khai của ảnh hoặc video. Nội dung được lưu trên trình duyệt hiện tại, không tự đồng bộ sang thiết bị khác.
     </div>
-    <section class="admin-panel" id="products-panel" role="tabpanel" aria-labelledby="products-tab">
-      <div class="admin-section-head">
+
+    <section class="gallery-admin-panel" id="media-form">
+      <div class="gallery-admin-panel-heading">
         <div>
-          <h2>Danh sách sản phẩm</h2>
-          <p>Thêm, cập nhật giá, hình ảnh và số lượng tồn kho.</p>
-        </div><button class="button button-dark" id="add-product" type="button"><i data-lucide="plus"></i> Thêm sản
-          phẩm</button>
+          <p class="gallery-eyebrow">BỘ SƯU TẬP CỦA BẠN</p>
+          <h2>Thêm ảnh hoặc video</h2>
+        </div>
       </div>
-      <label class="admin-search"><i data-lucide="search"></i><input id="admin-product-search" type="search"
-          placeholder="Tìm sản phẩm theo tên hoặc danh mục..."></label>
-      <div class="admin-table-wrap">
-        <table class="admin-table">
-          <thead>
-            <tr>
-              <th>Sản phẩm</th>
-              <th>Danh mục</th>
-              <th>Giá bán</th>
-              <th>Tồn kho</th>
-              <th>Hiển thị</th>
-              <th>Thao tác</th>
-            </tr>
-          </thead>
-          <tbody id="admin-products"></tbody>
-        </table>
-      </div>
-      <p class="admin-empty" id="products-empty" hidden>Chưa có sản phẩm phù hợp.</p>
+      <form id="media-form-fields" class="gallery-admin-form">
+        <label>Loại nội dung
+          <select name="kind" id="media-kind">
+            <option value="photo">Ảnh</option>
+            <option value="video">Video</option>
+          </select>
+        </label>
+        <label>Tiêu đề
+          <input name="title" type="text" required maxlength="80" placeholder="Ví dụ: Một ngày đầy nắng">
+        </label>
+        <label>Chủ đề
+          <select name="category">
+            <option value="portrait">Chân dung</option>
+            <option value="fashion">Thời trang</option>
+            <option value="everyday">Đời thường</option>
+          </select>
+        </label>
+        <label class="gallery-admin-wide" id="media-url-label">URL ảnh
+          <input name="mediaUrl" id="media-url" type="url" required placeholder="https://...">
+          <small id="media-url-help">Dán URL trực tiếp tới tệp ảnh công khai.</small>
+        </label>
+        <label class="gallery-admin-wide" id="cover-url-label" hidden>URL ảnh bìa video <span>(không bắt buộc)</span>
+          <input name="coverUrl" id="cover-url" type="url" placeholder="https://...">
+          <small>Ảnh bìa hiển thị trong gallery trước khi mở video.</small>
+        </label>
+        <div class="gallery-admin-actions">
+          <button class="gallery-admin-submit" type="submit">Thêm vào gallery <span aria-hidden="true">↗</span></button>
+          <p id="admin-status" class="gallery-admin-status" role="status" aria-live="polite"></p>
+        </div>
+      </form>
     </section>
-    <section class="admin-panel" id="orders-panel" role="tabpanel" aria-labelledby="orders-tab" hidden>
-      <div class="admin-section-head">
+
+    <section class="gallery-admin-panel" id="media-list">
+      <div class="gallery-admin-panel-heading">
         <div>
-          <h2>Xử lý đơn hàng</h2>
-          <p>Cập nhật trạng thái giao hàng và thanh toán cho đơn của khách.</p>
-        </div><label class="admin-order-filter">Lọc đơn<select id="order-status-filter">
-            <option value="Tất cả">Tất cả trạng thái</option>
-            <option>Chờ xác nhận</option>
-            <option>Đã xác nhận</option>
-            <option>Đang giao</option>
-            <option>Đã giao</option>
-            <option>Đã hủy</option>
-          </select></label>
+          <p class="gallery-eyebrow">QUẢN LÝ THƯ VIỆN</p>
+          <h2>Nội dung đã thêm</h2>
+        </div>
       </div>
-      <div id="admin-orders" class="admin-orders"></div>
-      <p class="admin-empty" id="orders-empty" hidden>Chưa có đơn hàng nào trên trình duyệt này.</p>
+      <div class="gallery-admin-list" id="admin-media-list"></div>
+      <p id="admin-media-empty" class="gallery-admin-empty" hidden>Bạn chưa thêm ảnh hoặc video nào.</p>
     </section>
-    <p class="admin-storage-note"><i data-lucide="hard-drive"></i> Thay đổi được lưu trong localStorage của trình duyệt
-      này; không tự đồng bộ giữa máy tính hoặc tài khoản.</p>
   </main>
-  <dialog class="admin-dialog" id="product-dialog" aria-labelledby="product-dialog-title">
-    <form id="product-form" class="admin-product-form">
-      <div class="dialog-heading">
-        <div>
-          <p class="eyebrow">DANH MỤC SẢN PHẨM</p>
-          <h2 id="product-dialog-title">Thêm sản phẩm</h2>
-        </div><button class="icon-button" type="button" id="close-product-dialog" aria-label="Đóng"><i
-            data-lucide="x"></i></button>
-      </div>
-      <input type="hidden" name="id">
-      <label>Tên sản phẩm<input name="name" required minlength="2" maxlength="90" placeholder="Áo sơ mi linen"></label>
-      <div class="admin-form-grid">
-        <label>Danh mục<select name="category" required></select></label>
-        <label>Giá bán (₫)<input name="price" type="number" min="1" step="1000" required></label>
-        <label>Giá gốc (₫) <span class="field-hint">Không bắt buộc</span><input name="oldPrice" type="number" min="0"
-            step="1000"></label>
-        <label>Tồn kho<input name="stock" type="number" min="0" step="1" required></label>
-        <label>Nhãn hiển thị <span class="field-hint">Không bắt buộc</span><input name="badge" maxlength="24"
-            placeholder="MỚI"></label>
-        <label>Đánh giá<input name="rating" type="number" min="0" max="5" step="0.1" value="5"></label>
-      </div>
-      <label>Đường dẫn ảnh<input name="image" type="url" required placeholder="https://..."></label>
-      <label>Từ khóa tìm kiếm<input name="keywords" maxlength="180" placeholder="linen, áo sơ mi, nữ..."></label>
-      <label class="admin-checkbox"><input name="active" type="checkbox" checked> Hiển thị sản phẩm trên cửa
-        hàng</label>
-      <div class="dialog-actions"><button class="button button-outline" type="button"
-          id="cancel-product-edit">Hủy</button><button class="button button-dark" type="submit">Lưu sản phẩm</button>
-      </div>
-    </form>
-  </dialog>
-  <div id="site-footer"></div>
-  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <footer class="gallery-footer">
+    <a class="gallery-brand" href="index.html">nàng<span>.</span></a>
+    <p>Ảnh từ Unsplash, video từ Pexels. Cần kết nối Internet để xem nội dung.</p>
+    <a href="#media-form">Lên đầu trang ↑</a>
+  </footer>
 </body>
 
 </html>
